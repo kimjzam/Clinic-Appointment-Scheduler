@@ -71,13 +71,17 @@ class Application:
         # button to perform a command
         self.submit = Button(self.left, text="Add Appointment", width=20, height=2, bg='steelblue', command=self.add_appointment)
         self.submit.place(x=300, y=340)
-        
+
         # getting the number of appointments fixed to view in the log
-            sql2 = "SELECT ID FROM appointments "
-            self.result = c.execute(sql2)
-            for self.row in self.result:
-                self.id = self.row[0]
-                ids.append(self.id)
+        sql2 = "SELECT ID FROM appointments "
+        self.result = c.execute(sql2)
+        for self.row in self.result:
+            self.id = self.row[0]
+            ids.append(self.id)
+
+        # ordering the ids
+        self.new = sorted(ids)
+        self.final_id = self.new[len(ids) - 1]
 
 
 # creating the object
