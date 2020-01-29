@@ -99,9 +99,20 @@ class Application:
             self.val4 = self.location_ent.get()
             self.val5 = self.time_ent.get()
             self.val6 = self.phone_ent.get()
+            # checking if the user input is empty
+            if self.val1 == '' or self.val2 == '' or self.val3 == '' or self.val4 == '' or self.val5 == '':
+                tkMessageBox.showinfo("Warning", "Please Fill Up All Boxes")
+            else:
 
 
+                # now we add to the database
+                sql = "INSERT INTO 'appointments' (name, age, gender, location, scheduled_time, phone) VALUES(?, ?, ?, ?, ?, ?)"
+                c.execute(sql, (self.val1, self.val2, self.val3, self.val4, self.val5, self.val6))
+                conn.commit()
+                tkMessageBox.showinfo("Success", "Appointment for " +str(self.val1) + " has been created" )
 
+
+                self.box.insert(END, 'Appointment fixed for ' + str(self.val1) + ' at ' + str(self.val5))
 
 
 # creating the object
