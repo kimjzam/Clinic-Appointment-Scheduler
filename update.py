@@ -90,7 +90,31 @@ class Application:
         # button to delete
         self.delete = Button(self.master, text="Delete", width=20, height=2, bg='red', command=self.delete_db)
         self.delete.place(x=150, y=380)
+    def update_db(self):
+        # declaring the variables to update
+        self.var1 = self.ent1.get() #updated name
+        self.var2 = self.ent2.get() #updated age
+        self.var3 = self.ent3.get() #updated gender
+        self.var4 = self.ent4.get() #updated location
+        self.var5 = self.ent5.get() #updated phone
+        self.var6 = self.ent6.get() #updated time
 
+        query = "UPDATE appointments SET name=?, age=?, gender=?, location=?, phone=?, scheduled_time=? WHERE name LIKE ?"
+        c.execute(query, (self.var1, self.var2, self.var3, self.var4, self.var5, self.var6, self.namenet.get(),))
+        conn.commit()
+        tkMessageBox.showinfo("Updated", "Successfully Updated.")
+    def delete_db(self):
+        # delete the appointment
+        sql2 = "DELETE FROM appointments WHERE name LIKE ?"
+        c.execute(sql2, (self.namenet.get(),))
+        conn.commit()
+        tkMessageBox.showinfo("Success", "Deleted Successfully")
+        self.ent1.destroy()
+        self.ent2.destroy()
+        self.ent3.destroy()
+        self.ent4.destroy()
+        self.ent5.destroy()
+        self.ent6.destroy()
 # creating the object
 root = Tk()
 b = Application(root)
