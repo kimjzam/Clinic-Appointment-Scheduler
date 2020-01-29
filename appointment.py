@@ -78,6 +78,10 @@ class Application:
             for self.row in self.result:
                 self.id = self.row[0]
                 ids.append(self.id)
+         # ordering the ids
+        self.new = sorted(ids)
+        self.final_id = self.new[len(ids)-1]
+
 
 
 # creating the object
