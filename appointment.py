@@ -81,6 +81,15 @@ class Application:
          # ordering the ids
         self.new = sorted(ids)
         self.final_id = self.new[len(ids)-1]
+        
+        # displaying the logs in our right frame
+        self.logs = Label(self.right, text="Logs", font=('arial 28 bold'), fg='white', bg='steelblue')
+        self.logs.place(x=0, y=0)
+
+        self.box = Text(self.right, width=50, height=40)
+        self.box.place(x=20, y=60)
+        self.box.insert(END, "Total Appointments till now :  " + str(self.final_id))
+
 
 
 
