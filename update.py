@@ -115,6 +115,7 @@ class Application:
         self.ent4.destroy()
         self.ent5.destroy()
         self.ent6.destroy()
+        
 # creating the object
 root = Tk()
 b = Application(root)
