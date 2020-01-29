@@ -23,7 +23,7 @@ class Application:
         self.right.pack(side=RIGHT)
 
         # labels for the window
-        self.heading = Label(self.left, text="Mapua Clinic Appointments", font=('arial 40 bold'), fg='black', bg='lightgreen')
+        self.heading = Label(self.left, text="ABC Hospital Appointments", font=('arial 40 bold'), fg='black', bg='lightgreen')
         self.heading.place(x=0, y=0)
         # patients name
         self.name = Label(self.left, text="Patient's Name", font=('arial 18 bold'), fg='black', bg='lightgreen')
@@ -71,17 +71,17 @@ class Application:
         # button to perform a command
         self.submit = Button(self.left, text="Add Appointment", width=20, height=2, bg='steelblue', command=self.add_appointment)
         self.submit.place(x=300, y=340)
-        
+    
         # getting the number of appointments fixed to view in the log
-            sql2 = "SELECT ID FROM appointments "
-            self.result = c.execute(sql2)
-            for self.row in self.result:
-                self.id = self.row[0]
-                ids.append(self.id)
-         # ordering the ids
+        sql2 = "SELECT ID FROM appointments "
+        self.result = c.execute(sql2)
+        for self.row in self.result:
+            self.id = self.row[0]
+            ids.append(self.id)
+        
+        # ordering the ids
         self.new = sorted(ids)
         self.final_id = self.new[len(ids)-1]
-        
         # displaying the logs in our right frame
         self.logs = Label(self.right, text="Logs", font=('arial 28 bold'), fg='white', bg='steelblue')
         self.logs.place(x=0, y=0)
@@ -89,31 +89,28 @@ class Application:
         self.box = Text(self.right, width=50, height=40)
         self.box.place(x=20, y=60)
         self.box.insert(END, "Total Appointments till now :  " + str(self.final_id))
-        
-        # funtion to call when the submit button is clicked
-        def add_appointment(self):
-            # getting the user inputs
-            self.val1 = self.name_ent.get()
-            self.val2 = self.age_ent.get()
-            self.val3 = self.gender_ent.get()
-            self.val4 = self.location_ent.get()
-            self.val5 = self.time_ent.get()
-            self.val6 = self.phone_ent.get()
-            # checking if the user input is empty
-            if self.val1 == '' or self.val2 == '' or self.val3 == '' or self.val4 == '' or self.val5 == '':
-                tkMessageBox.showinfo("Warning", "Please Fill Up All Boxes")
-            else:
+    # funtion to call when the submit button is clicked
+    def add_appointment(self):
+        # getting the user inputs
+        self.val1 = self.name_ent.get()
+        self.val2 = self.age_ent.get()
+        self.val3 = self.gender_ent.get()
+        self.val4 = self.location_ent.get()
+        self.val5 = self.time_ent.get()
+        self.val6 = self.phone_ent.get()
 
+        # checking if the user input is empty
+        if self.val1 == '' or self.val2 == '' or self.val3 == '' or self.val4 == '' or self.val5 == '':
+            tkMessageBox.showinfo("Warning", "Please Fill Up All Boxes")
+        else:
+            # now we add to the database
+            sql = "INSERT INTO 'appointments' (name, age, gender, location, scheduled_time, phone) VALUES(?, ?, ?, ?, ?, ?)"
+            c.execute(sql, (self.val1, self.val2, self.val3, self.val4, self.val5, self.val6))
+            conn.commit()
+            tkMessageBox.showinfo("Success", "Appointment for " +str(self.val1) + " has been created" )
+            
 
-                # now we add to the database
-                sql = "INSERT INTO 'appointments' (name, age, gender, location, scheduled_time, phone) VALUES(?, ?, ?, ?, ?, ?)"
-                c.execute(sql, (self.val1, self.val2, self.val3, self.val4, self.val5, self.val6))
-                conn.commit()
-                tkMessageBox.showinfo("Success", "Appointment for " +str(self.val1) + " has been created" )
-
-
-                self.box.insert(END, 'Appointment fixed for ' + str(self.val1) + ' at ' + str(self.val5))
-
+            self.box.insert(END, 'Appointment fixed for ' + str(self.val1) + ' at ' + str(self.val5))
 
 # creating the object
 root = Tk()
